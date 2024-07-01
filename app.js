@@ -1,6 +1,16 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const mongoose = require('mongoose');
+
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@articles-api.ohryhhh.mongodb.net/?retryWrites=true&w=majority&appName=articles-api`,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
+mongoose.connection.on('connected', () => {
+    console.log("MongoDB Connected!");
+});
 
 const articleRoutes = require('./api/routes/articles');
 const categoriesRoutes = require('./api/routes/categories');
