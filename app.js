@@ -4,6 +4,12 @@ const morgan = require('morgan');
 
 app.use(morgan("dev"));
 
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: false
+}));
+
+
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
@@ -14,10 +20,15 @@ app.use((req, res, next) => {
     next(); // next( ) function is a callback that, when invoked, passes control to the next middleware function.
 });
 
-
 app.get('/' , (req, res) => {
     res.status(200).json({
         message: 'Hello World 3'
+    })
+});
+
+app.post('/articles', (req, res) => {
+    res.status(200).json({
+        body: req.body
     })
 });
 
