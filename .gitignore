@@ -109,3 +109,7 @@ jest/
 
 # Storybook build directory
 .out/
+
+node_modules
+nodemon.json
+uploads
