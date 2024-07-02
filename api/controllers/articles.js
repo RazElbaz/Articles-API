@@ -17,32 +17,36 @@ module.exports = {
     },
     createArticle: (req, res) => {
         const { title, description, content, categoryId } = req.body;
-
-        Category.findById(categoryId).then((category) => {
-            if(!category){
-                return res.status(404).json({
-                    message: "Category not found"
+    
+        Category.findById(categoryId)
+            .then((category) => {
+                if (!category) {
+                    return res.status(404).json({
+                        message: 'Category not found'
+                    });
+                }
+                const article = new Article({
+                    _id: new mongoose.Types.ObjectId(),
+                    title,
+                    description,
+                    content,
+                    categoryId
+                });
+    
+                article.save().then(() => {
+                    res.status(200).json({
+                        message: 'Created article'
+                    });
                 })
-            }
-
-            const article = new Article({
-                _id: new mongoose.Types.ObjectId(),
-                title, 
-                description, 
-                content,
-                categoryId
-            });
-
-            return article.save();
-        }).then(() => {
-            res.status(200).json({
-                message: "Created article"
+                .catch(error => {
+                    if (!res.headersSent) {
+                        res.status(500).json({
+                            error
+                        });
+                    }
+                });
             })
-        }).catch(error => {
-            res.status(500).json({
-                error
-            })
-        });
+            
     },
     getArticle: (req, res) => {
         const articleId = req.params.articleId;
@@ -59,28 +63,66 @@ module.exports = {
     },
     updateArticle: (req, res) => {
         const articleId = req.params.articleId;
-        
-        Article.findByIdAndUpdate({_id: articleId}, req.body).then(() => {
-            res.status(200).json({
-                message: "article updated"
-            })
-        }).catch(error => {
-            res.status(500).json({
-                error
-            })
+        const { categoryId } = req.body;
+
+        Article.findById(articleId)
+        .then((article) => {
+            if (!article) {
+                return res.status(404).json({
+                    message: 'Article not found'
+                });
+            }
+
+            if (categoryId) {
+                return Category.findById(categoryId)
+                    .then((category) => {
+                        if (!category) {
+                            return res.status(404).json({
+                                message: 'Category not found'
+                            });
+                        }
+
+                        return Article.findByIdAndUpdate(articleId, req.body, { new: true })
+                            .then((updatedArticle) => {
+                                res.status(200).json({
+                                    message: 'Article Updated',
+                                    article: updatedArticle
+                                });
+                            })
+                            .catch(error => {
+                                res.status(500).json({ error });
+                            });
+                    })
+                    .catch(error => {
+                        res.status(500).json({ error });
+                    });
+            } else {
+                return Article.findByIdAndUpdate(articleId, req.body, { new: true })
+                    .then((updatedArticle) => {
+                        res.status(200).json({
+                            message: 'Article Updated',
+                            article: updatedArticle
+                        });
+                    })
+                    .catch(error => {
+                        res.status(500).json({ error });
+                    });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ error });
         });
     },
     deleteArticle: (req, res) => {
         const articleId = req.params.articleId;
-        
-        Article.findByIdAndDelete({_id: articleId}).then(() => {
-            res.status(200).json({
-                message: `Article _id: ${articleId} Deleted`
-            })
+
+        Article.findByIdAndDelete(articleId).then((article) => {
+            if (!article) {
+                return res.status(404).json({ message: 'Article not found' });
+            }
+            res.status(200).json({ message: `Article _id: ${articleId} Deleted` });
         }).catch(error => {
-            res.status(500).json({
-                error
-            })
+            res.status(500).json({ error });
         });
     }
 
