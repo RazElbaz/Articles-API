@@ -108,7 +108,6 @@ Endpoint to create a new article.
 - Method: POST
 - URL: `http://localhost:3000/articles`
 - Headers:
-  - Content-Type: application/x-www-form-urlencoded
   - Authorization: Bearer \<your_access_token\>
 
 - Body:
@@ -116,7 +115,7 @@ Endpoint to create a new article.
   {
     "title": "New Article",
     "description": "This is a new article.",
-    "content": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "content": "Article with image content",
     "categoryId": "6683a18a1040b4ccfb4478d4",
     "image": "<file_path>"
   }
@@ -124,7 +123,7 @@ Endpoint to create a new article.
 
 **Example Usage:**
 ```bash
-curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <your_access_token>" -d 'title=New Article&description=This is a new article.&content=Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&categoryId=6683a18a1040b4ccfb4478d4&image=<file_path>' http://localhost:3000/articles
+curl -X POST -H "Authorization: Bearer <your_access_token>" -d 'title=New Article&description=This is a new article.&content=Article with image content&categoryId=6683a18a1040b4ccfb4478d4&image=<file_path>' http://localhost:3000/articles
 ```
 
 ##### Update Article
@@ -253,14 +252,14 @@ Endpoint to register a new user.
 - Body:
   ```json
   {
-    "email": "razq11@gmail.com",
+    "email": "example@gmail.com",
     "password": "123456"
   }
   ```
 
 **Example Usage:**
 ```bash
-curl -X POST -d '{"email": "razq11@gmail.com", "password": "123456"}' http://localhost:3000/users/signup
+curl -X POST -d '{"email": "example@gmail.com", "password": "123456"}' http://localhost:3000/users/signup
 ```
 
 ##### User Login
@@ -273,13 +272,13 @@ Endpoint to authenticate and log in a user.
 - Body:
   ```json
   {
-    "email": "razq11@gmail.com",
+    "email": "example@gmail.com",
     "password": "123456"
   }
   ```
 
 **Example Usage:**
 ```bash
-curl -X POST -d '{"email": "razq11@gmail.com", "password": "123456"}' http://localhost:3000/users/login
+curl -X POST -d '{"email": "example@gmail.com", "password": "123456"}' http://localhost:3000/users/login
 ```
 ---
