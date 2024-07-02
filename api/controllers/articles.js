@@ -16,6 +16,8 @@ module.exports = {
        
     },
     createArticle: (req, res) => {
+        console.log(req.file);
+        const { path: image } = req.file;
         const { title, description, content, categoryId } = req.body;
     
         Category.findById(categoryId)
@@ -30,7 +32,8 @@ module.exports = {
                     title,
                     description,
                     content,
-                    categoryId
+                    categoryId,
+                    image: image.replace('\\', '/')
                 });
     
                 article.save().then(() => {
