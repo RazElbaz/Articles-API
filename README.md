@@ -9,7 +9,7 @@ NodeExpressAPI is a RESTful API built with Node.js, Express, and MongoDB. It pro
 
 1. Clone the repository:
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/RazElbaz/NodeExpressAPI.git
    cd NodeExpressAPI
    ```
 
