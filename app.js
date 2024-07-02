@@ -2,13 +2,9 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const checkAuth = require('./api/middlewares/checkAuth');
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@articles-api.ohryhhh.mongodb.net/?retryWrites=true&w=majority&appName=articles-api`,{
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
-    // useCreateIndex: true
-    
-});
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@articles-api.ohryhhh.mongodb.net/?retryWrites=true&w=majority&appName=articles-api`);
 
 mongoose.connection.on('connected', () => {
     console.log("MongoDB Connected!");
@@ -39,7 +35,7 @@ app.use((req, res, next) => {
 
 //Routes
 app.use('/articles', articleRoutes);
-app.use('/categories', categoriesRoutes);
+app.use('/categories', checkAuth, categoriesRoutes);
 app.use('/users', usersRoutes);
 
 app.use((req, res, next) => {
