@@ -4,8 +4,10 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@articles-api.ohryhhh.mongodb.net/?retryWrites=true&w=majority&appName=articles-api`,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
+    // useCreateIndex: true
+    
 });
 
 mongoose.connection.on('connected', () => {
@@ -34,7 +36,6 @@ app.use((req, res, next) => {
     }
     next(); // next( ) function is a callback that, when invoked, passes control to the next middleware function.
 });
-
 
 //Routes
 app.use('/articles', articleRoutes);
