@@ -1,9 +1,9 @@
 
 ---
 
-# NodeExpressAPI
+# Articles API
 
-NodeExpressAPI is a RESTful API built with Node.js, Express, and MongoDB. It provides endpoints for managing articles, categories, and user authentication.
+Articles API is a RESTful API built with Node.js, Express, and MongoDB. It provides endpoints for managing articles, categories, and user authentication.
 
 ## Installation
 
